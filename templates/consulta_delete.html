@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+        <h2>Tem certeza que deseja excluir a Consulta?</h2>
+        <form method="post" action='/consultas/delete/{{consulta.id}}'>
+        <input class="btn btn-primary" type="submit" value="Sim"> 
+        <a type="button" class="btn btn-primary" href="/consultas/recovery">Cancelar</a>
+        </form>
+        
+{% endblock %}

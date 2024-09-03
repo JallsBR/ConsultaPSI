@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+        <h2>Tem certeza que deseja excluir o Pisicólogo {{psi.nome}}?</h2>
+        <form method="post" action='/psi/delete/{{psi.id}}'>
+        <input class="btn btn-primary" type="submit" value="Sim"> 
+        <a type="button" class="btn btn-primary" href="/psi/recovery">Cancelar</a>
+        </form>
+        
+{% endblock %}

@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+    <form method="post" action='/consultas/create'>
+        <div class="mb-3">
+            <label for="data_consulta" class="form-label">Data da Consulta:</label>
+            <input class="form-control" type="date" name="data_consulta" required>
+        </div>
+        <div class="mb-3">
+            <label for="hora_consulta" class="form-label">Horário da Consulta:</label>
+            <input class="form-control" type="time" name="hora_consulta" value="08:00" required>
+        </div>
+        <div class="mb-3">
+            <label for="duracao" class="form-label">Duração:</label>
+            <input class="form-control" type="time" name="duracao" value="00:50" required>
+        </div>
+        <div class="mb-3">
+            <label for="consulta_status_id" class="form-label">Status da Consulta:</label>
+            <select class="form-select" name="consulta_status_id" required>
+                <option value="" disabled selected>Selecione o Status</option>
+                {% for status in status_consultas %}
+                <option value="{{ status.id }}">{{ status.status }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="id_paciente" class="form-label">Paciente:</label>
+            <select class="form-select" name="id_paciente" required>
+                <option value="" disabled selected>Selecione o Paciente</option>
+                {% for paciente in pacientes %}
+                <option value="{{ paciente.id }}">{{ paciente.nome }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="psi_id" class="form-label">Psicólogo:</label>
+            <select class="form-select" name="psi_id" required>
+                <option value="" disabled selected>Selecione o Psicólogo</option>
+                {% for psi in psicologos %}
+                <option value="{{ psi.id }}">{{ psi.nome }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="mb-3">
+            <label for="convenios_id" class="form-label">Convênio:</label>
+            <select class="form-select" name="convenios_id" required>
+                <option value="" disabled selected>Selecione o Convênio</option>
+                {% for convenio in convenios %}
+                <option value="{{ convenio.id }}">{{ convenio.convenio }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <br>
+        <input type="submit" class="btn btn-primary" value="Agendar">
+        <br>
+    </form>
+{% endblock %}

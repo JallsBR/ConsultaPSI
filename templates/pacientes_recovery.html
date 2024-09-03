@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+ 
+<div class="container">
+  <br>
+  <div class="container">
+    <a type="button" class="btn btn-primary" href="/pacientes/create">Cadastrar Paciente</a>
+  </div>
+  <br>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Nome</th>
+        <th scope="col">Fone</th>         
+        <th scope="col">Ações</th>
+     
+
+      </tr>
+    </thead>
+    <tbody>
+      {% for pacientes in pacientes %}
+      <tr>                
+        <td>{{pacientes.id}}</td>                  
+        <td>{{pacientes.nome}} {{pacientes.sobrenome}}</td>
+        <td>{{pacientes.fone}}</td>
+
+        <td>
+          <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal{{pacientes.id}}">Informações</a>
+          <a type="button" class="btn btn-primary" href="/pacientes/update/{{pacientes.id}}">Editar</a> 
+          <a type="button" class="btn btn-danger" href="/pacientes/delete/{{pacientes.id}}">Deletar</a>
+          
+        </td>
+      </tr>
+
+      <!-- Modal for each patient -->
+      <div class="modal fade" id="infoModal{{pacientes.id}}" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="infoModalLabel">Informações do Paciente</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="container">
+                <div class="row">
+                  <!-- Coluna 1 -->
+                  <div class="col-md-6">
+                    <p><strong>Nome:</strong> {{pacientes.nome}} {{pacientes.sobrenome}}</p>
+                    <p><strong>CPF:</strong> {{pacientes.cpf}}</p>
+                    <p><strong>Nascimento:</strong> {{pacientes.nascimento}}</p>
+                    <p><strong>Gênero:</strong> {{pacientes.genero}}</p>
+                    <p><strong>Ocupação:</strong> {{pacientes.ocupacao}}</p>                    
+                    <p><strong>Telefone:</strong> {{pacientes.fone}}</p>
+                    
+                  </div>
+                  <!-- Coluna 2 -->
+                  <div class="col-md-6">                    
+                    <p><strong>Data de Início:</strong> {{pacientes.datainicio}}</p>
+                    <p><strong>Email:</strong> {{pacientes.email}}</p>
+                    <p><strong>CEP:</strong> {{pacientes.cep}} </p>
+                    <p><strong>Endereço:</strong> {{pacientes.endereco}}, {{pacientes.endereco_complemento}}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+
+{% endblock %}
+
+

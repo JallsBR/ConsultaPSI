@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+
+<div class="container text-center"> 
+    <div class="row">
+        <div class="col-md-6">
+            <div class="container">
+                <br>
+                <div class="container">
+                    <a type="button" class="btn btn-primary" href="/status_consultas/create">Novo Status de Consultas</a>
+                </div>
+                <br>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>        
+                            <th scope="col">Status</th>        
+                            <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for status_consultas in status_consultas %}
+                        <tr>
+                            <td>{{status_consultas.id}}</td>
+                            <td>{{status_consultas.status}}</td>                
+                            <td>
+                                <a type="button" class="btn btn-primary" href="/status_consultas/update/{{status_consultas.id}}">Editar</a> 
+                                <a type="button" class="btn btn-primary" href="/status_consultas/delete/{{status_consultas.id}}">Deletar</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <div class="col-md-6">
+            <div class="container">
+                <br>
+                <div class="container">
+                    <a type="button" class="btn btn-primary" href="/convenio/create">Cadastrar Convênio</a>
+                </div>
+                <br>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Id</th>        
+                            <th scope="col">Convênio</th>
+                            <th scope="col">Valor da Consulta</th>     
+                            <th scope="col">Ações</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for convenio in convenio %}
+                        <tr>                
+                            <td>{{convenio.id}}</td>
+                            <td>{{convenio.convenio}}</td>
+                            <td>R$ {{convenio.valor_consulta}}</td>              
+                            <td>
+                                <a type="button" class="btn btn-primary" href="/convenio/update/{{convenio.id}}">Editar</a> 
+                                <a type="button" class="btn btn-primary" href="/convenio/delete/{{convenio.id}}">Deletar</a>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

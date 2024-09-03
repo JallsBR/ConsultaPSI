@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+        <form method="post" action='/consultas/update/{{consulta.id}}'>
+                <div class="mb-3">
+                        <h2>{{consulta.id_paciente}}</h2>            
+                        <label for="data_consulta" class="form-label"> Data Consulta:</label>
+                        <input  class="form-control" type="date" name="data_consulta"  value="{{consulta.data_consulta}}">
+                    </div>
+                    <div class="mb-3">
+                        <label for="hora_consulta" class="form-label"> Horario da consulta:</label>
+                        <input  class="form-control" type="time" name="hora_consulta" value="{{consulta.hora_consulta}}"> 
+                    </div>
+                    <div class="mb-3">
+                        <label for="duracao" class="form-label"> Duração:</label>
+                        <input  class="form-control" type="time" name="duracao" value="{{consulta.duracao}}">
+                    </div>
+                    <br>
+                        <label for="status" class="form-label">Status:</label>
+                        <select class="form-select" name="consulta_status_id" aria-label="Default select example">
+                            <option selected> - </option>
+                            {% for status in status %}
+                            <option value={{status.id}}> {{status.status}}</option>
+                            {% endfor %}
+                        </select>
+                        <br>
+
+                    <input type="submit" class="btn btn-primary" value="Alterar">
+                </form>
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+        <form method="post" action='/status_consultas/update/{{status_consultas.id}}'>
+                <div class="mb-3">                                   
+                        <label for="status" class="form-label"> Status Consulta:</label>
+                        <input  class="form-control" type="text" name="status"  value="{{status_consultas.status}}">
+                    </div>                    
+                        <input type="submit" class="btn btn-primary" value="Alterar">
+                </form>
+{% endblock %}

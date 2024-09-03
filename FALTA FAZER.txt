@@ -1,0 +1,20 @@
+pagina de pacientes
+
+genero pra por no pacientes
+
+
+autorização apenas do psicólogo nos seus pacientes
+
+palavras chaves
+
+index - ganhos, calendário, consultas do dia
+
+
+
+
+{{current_user.nome}}
+
+{% if current_user.is_authenticated %}
+{% endif %}
+
+{{ url_for('/logout')}}

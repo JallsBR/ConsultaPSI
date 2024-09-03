@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+<div class="container">
+
+  <br>
+  <br>
+
+  <table class="table">
+    <thead>
+      <tr>
+      
+        <th scope="col">Nome</th>       
+        <th scope="col">Email</th>
+        <th scope="col">Telefone</th>
+        <th scope="col">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for psi in psi %}
+      <tr>
+
+        <td>{{psi.nome}} {{psi.sobrenome}}</td>       
+        <td>{{psi.email}}</td>
+        <td>{{psi.telefone}}</td>
+        <td>
+          <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal{{psi.id}}">Informações</a>
+          {% if psi.id == current_user.id %}
+          <!--  <a type="button" class="btn btn-primary" href="/psi/listapacientes/{{psi.id}}">Pacientes</a>  -->     
+          <a type="button" class="btn btn-primary" href="/psi/update/{{psi.id}}">Editar</a>
+          {% endif %}          
+          <!-- <a type="button" class="btn btn-primary" href="/psi/delete/{{psi.id}}">Deletar</a> -->
+        </td>
+      </tr>
+
+
+      <div class="modal fade" id="infoModal{{psi.id}}" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h1 class="modal-title fs-5" id="infoModalLabel">Informações do Psicólogo</h1>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <div class="container">
+                <div class="row">
+
+                  <div >
+                    <p><strong>Nome:</strong> {{psi.nome}} {{psi.sobrenome}}</p>
+                    <p><strong>CRP:</strong> {{psi.crp}}</p>
+                    <p><strong>Abordagem:</strong> {{psi.abordagem}}</p>
+                    <p><strong>Email:</strong> {{psi.email}}</p>
+                    <p><strong>Telefone:</strong> {{psi.telefone}}</p> 
+                  </div>
+
+                  
+                </div>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}

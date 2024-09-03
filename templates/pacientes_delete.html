@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+        <h2>Tem certeza que deseja excluir o Paciente {{paciente.nome}} {{paciente.sobrenome}}?</h2>
+        <form method="post" action='/pacientes/delete/{{paciente.id}}'>
+        <input class="btn btn-primary" type="submit" value="Sim"> 
+        <a type="button" class="btn btn-primary" href="/pacientes/recovery">Cancelar</a>
+        </form>
+
+{% endblock %}

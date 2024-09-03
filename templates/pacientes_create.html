@@ -1,0 +1,75 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+
+<form method="post" action='/pacientes/create'>
+    <div class="mb-3">
+        <label for="nome" class="form-label">Nome:</label>
+        <input id="nome" class="form-control" type="text" name="nome" required>
+    </div>
+    <div class="mb-3">
+        <label for="sobrenome" class="form-label">Sobrenome:</label>
+        <input id="sobrenome" class="form-control" type="text" name="sobrenome" required>
+    </div>
+    <div class="mb-3">
+        <label for="cpf" class="form-label">CPF:</label>
+        <input id="cpf" class="form-control" type="text" name="cpf" required>
+    </div>
+    <div class="mb-3">
+        <label for="nascimento" class="form-label">Data de Nascimento:</label>
+        <input id="nascimento" class="form-control" type="date" name="nascimento" required>
+    </div>
+    <div class="mb-3">
+        <label for="genero" class="form-label">Gênero:</label>
+        <input id="genero" class="form-control" type="text" name="genero" required>
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Email:</label>
+        <input id="email" class="form-control" type="email" name="email" required>
+    </div>
+    <div class="mb-3">
+        <label for="ocupacao" class="form-label">Ocupação:</label>
+        <input id="ocupacao" class="form-control" type="text" name="ocupacao" required>
+    </div>
+    <div class="mb-3">
+        <label for="cep" class="form-label">CEP:</label>
+        <input id="cep" class="form-control" type="text" name="cep" required>
+    </div>
+    <div class="mb-3">
+        <label for="endereco" class="form-label">Endereço:</label>
+        <input id="endereco" class="form-control" type="text" name="endereco" required>
+    </div>
+    <div class="mb-3">
+        <label for="endereco_complemento" class="form-label">Complemento do Endereço:</label>
+        <input id="endereco_complemento" class="form-control" type="text" name="endereco_complemento">
+    </div>
+    <div class="mb-3">
+        <label for="fone" class="form-label">Telefone:</label>
+        <input id="fone" class="form-control" type="text" name="fone" required>
+    </div>
+    <!--
+    <div class="mb-3">
+        <label for="convenio" class="form-label">Convênio:</label>
+        <select class="form-select" name="convenios_id" aria-label="Default select example" required>
+            <option value="" selected>Selecione um convênio</option>
+            {% for convenio in convenio %}
+            <option value="{{convenio.id}}">{{convenio.convenio}}</option>
+            {% endfor %}
+        </select>
+    </div>
+    
+    <div class="mb-3">
+        <label for="psi_id" class="form-label">Psicólogo:</label>
+        <select class="form-select" name="psi_id" aria-label="Default select example" required>
+            <option value="" selected>Selecione um psicólogo</option>
+            {% for psi in psi %}
+            <option value="{{psi.id}}">{{psi.nome}}</option>
+            {% endfor %}
+        </select>
+    </div>
+-->
+
+    <input type="submit" class="btn btn-primary" value="Cadastrar">
+</form>
+
+{% endblock %}

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+        <h2>Tem certeza que deseja excluir a Transcrição {{transcricao.id}}?</h2>
+        <form method="post" action='/transcricoes/delete/{{transcricao.id}}'>
+        <input class="btn btn-primary" type="submit" value="Sim"> 
+        <a type="button" class="btn btn-primary" href="/transcricoes/recovery">Cancelar</a>
+        </form>
+
+{% endblock %}

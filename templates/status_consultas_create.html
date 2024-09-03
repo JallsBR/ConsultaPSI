@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+
+
+        <form method="post" action='/status_consultas/create'>
+            <div class="mb-3">            
+                <label for="status" class="form-label"> Status:</label>
+                <input  class="form-control" type="text" name="status">
+            </div>            
+                <input type="submit" class="btn btn-primary" value="Cadastrar">
+        </form>
+{% endblock %}

@@ -1,0 +1,57 @@
+<!-- templates\finalizar_cadastro.html -->
+{% extends 'base.html' %}
+
+{% block conteudo %}
+
+{% if current_user.is_authenticated %}
+    {% if current_user.tipo == 'não informado' %}
+    <h3>Precisamos terminar seu cadastro!</h3>
+
+    <br>
+    <form method="post" action="/user/finalizar/{{ current_user.id }}">
+        <label for="psi.id" class="form-label">Função:</label>
+        <select class="form-select" id="tipo" name="tipo" aria-label="-" onchange="toggleFields()">
+            <option selected value=""> - </option>        
+            <option value="atendente">Atendente</option>
+            <option value="psicólogo">Psicólogo</option>   
+        </select>
+
+        <div class="mb-3">
+            <label for="crp" class="form-label">CRP:</label>
+            <input class="form-control" type="text" id="crp" name="crp" disabled> 
+        </div>
+        <div class="mb-3">
+            <label for="abordagem" class="form-label">Abordagem:</label>
+            <input class="form-control" type="text" id="abordagem" name="abordagem" disabled> 
+        </div>
+
+        <input type="submit" class="btn btn-primary" value="Cadastrar">
+        <br>
+    </form>
+
+    <script>
+        function toggleFields() {
+        var tipo = document.getElementById('tipo').value;
+        var crpField = document.getElementById('crp');
+        var abordagemField = document.getElementById('abordagem');
+
+        if (tipo === 'psicólogo') {
+            crpField.disabled = false;
+            abordagemField.disabled = false;
+        } else {
+            crpField.value = '';
+            abordagemField.value = '';
+            crpField.disabled = true;
+            abordagemField.disabled = true;
+        }
+    }
+    </script>
+    {% else %}
+        {{ redirect(url_for('index')) }}
+    {% endif %}
+
+{% else %}
+    {{ redirect(url_for('login')) }}
+{% endif %}
+
+{% endblock %}

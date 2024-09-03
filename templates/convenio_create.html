@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block conteudo %}
+
+
+        <form method="post" action='/convenio/create'>
+            <div class="mb-3">            
+                <label for="convenio" class="form-label"> Convênio:</label>
+                <input  class="form-control" type="text" name="convenio">
+            </div>
+            <div class="mb-3">
+                <label for="valor_consulta" class="form-label"> Valor da consulta:</label>
+                <input  class="form-control" type="text" name="valor_consulta"> 
+            </div>            
+                <input type="submit" class="btn btn-primary" value="Cadastrar">
+        </form>
+{% endblock %}
