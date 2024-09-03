@@ -28,7 +28,7 @@
         <tr>
           <td>{{ consulta.id }}</td>
           <td>{{ consulta.paciente_nome }}</td>
-          <td>{{ consulta.data_consulta }}</td>
+          <td>{{ consulta.data_consulta.strftime('%d/%m/%Y') }}</td>
           <td>{{ consulta.hora_consulta }}</td>
           <td>{{ consulta.duracao }}</td>
           <td>{{ consulta.status }}</td>

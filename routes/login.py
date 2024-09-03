@@ -45,16 +45,24 @@ def register():
         login = request.form.get('login')
         senha = request.form.get('senha')
         csenha = request.form.get('csenha')
-        tipo="não informado"
-        print(nome, sobrenome, email, telefone, login, senha, csenha)
-        if nome and sobrenome and email and telefone and login and senha and csenha == senha:
-            success, message = UserService.create_user(nome, sobrenome, email, telefone, login, senha, tipo)
-            if success:
-                return redirect('/login')
-            else:
-                print(f"Erro ao criar usuário: {message}")
-                flash(message)
-                return redirect('/login')
+        tipo = "não informado"
+
+
+        if not (nome and sobrenome and email and telefone and login and senha and csenha):
+            flash("Todos os campos devem ser preenchidos!")
+            return redirect('/login/register')
+
+        if senha != csenha:
+            flash("As senhas não coincidem!")
+            return redirect('/login/register')
+
+        success, message = UserService.create_user(nome, sobrenome, email, telefone, login, senha, tipo)
+        if success:
+            return redirect('/login')
+        else:
+            flash(f"Erro ao criar usuário: {message}")
+            return redirect('/login/register')
+
     return render_template('register.html')
 
 @blueprint_login.route('logout')

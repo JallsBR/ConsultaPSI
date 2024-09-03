@@ -2,6 +2,7 @@ from flask import Blueprint, render_template, request, redirect, flash
 from database.models.user_model import User
 from database.models.convenio_model import Convenio
 from service.paciente_service import PacienteService
+from service.consulta_service import ConsultaService
 from service.psi_service import PsiService
 from service.convenio_service import ConvenioService
 from database.database import db
@@ -103,3 +104,19 @@ def delete(id):
             return redirect('/pacientes/recovery')
 
 
+
+
+@blueprint_pacientes.route('/<int:id>', methods=['GET', 'POST'])
+def pagina_paciente(id):
+    paciente, error = PacienteService.get_paciente_by_id(id)
+    consultas, error = ConsultaService.get_consulta_pacientes_por_id(id)
+    if error:
+        flash(error)
+        return redirect('/pacientes/recovery')
+
+    if request.method == 'GET':
+        return render_template('pagina_pacientes.html', paciente=paciente, consultas=consultas)
+    
+    if request.method == 'POST':
+        pass
+        

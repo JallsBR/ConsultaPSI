@@ -24,11 +24,12 @@
       <tr>                
         <td>{{pacientes.id}}</td>                  
         <td>{{pacientes.nome}} {{pacientes.sobrenome}}</td>
-        <td>{{pacientes.fone}}</td>
+        <td>{{pacientes.fone | format_phone }}</td>
 
         <td>
           <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal{{pacientes.id}}">Informações</a>
-          <a type="button" class="btn btn-primary" href="/pacientes/update/{{pacientes.id}}">Editar</a> 
+          <a type="button" class="btn btn-primary" href="/pacientes/update/{{pacientes.id}}">Editar</a>
+          <a type="button" class="btn btn-primary" href="/pacientes/{{pacientes.id}}">Detalhar</a> 
           <a type="button" class="btn btn-danger" href="/pacientes/delete/{{pacientes.id}}">Deletar</a>
           
         </td>
@@ -49,15 +50,15 @@
                   <div class="col-md-6">
                     <p><strong>Nome:</strong> {{pacientes.nome}} {{pacientes.sobrenome}}</p>
                     <p><strong>CPF:</strong> {{pacientes.cpf}}</p>
-                    <p><strong>Nascimento:</strong> {{pacientes.nascimento}}</p>
+                    <p><strong>Nascimento:</strong> {{pacientes.nascimento.strftime('%d/%m/%Y')}}</p>
                     <p><strong>Gênero:</strong> {{pacientes.genero}}</p>
                     <p><strong>Ocupação:</strong> {{pacientes.ocupacao}}</p>                    
-                    <p><strong>Telefone:</strong> {{pacientes.fone}}</p>
+                    <p><strong>Telefone:</strong> {{pacientes.fone| format_phone }}</p>
                     
                   </div>
                   <!-- Coluna 2 -->
                   <div class="col-md-6">                    
-                    <p><strong>Data de Início:</strong> {{pacientes.datainicio}}</p>
+                    <p><strong>Data de Início:</strong> {{pacientes.datainicio.strftime('%d/%m/%Y') }}</p>
                     <p><strong>Email:</strong> {{pacientes.email}}</p>
                     <p><strong>CEP:</strong> {{pacientes.cep}} </p>
                     <p><strong>Endereço:</strong> {{pacientes.endereco}}, {{pacientes.endereco_complemento}}</p>

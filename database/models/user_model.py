@@ -10,7 +10,7 @@ class User(db.Model, UserMixin):
     id = db.Column('id', db.Integer, primary_key=True)  
     nome = db.Column('nome', db.String(150))
     sobrenome = db.Column('sobrenome', db.String(150))
-    crp = db.Column('crp', db.String(20), unique=True)
+    crp = db.Column('crp', db.String(20))
     abordagem = db.Column('abordagem', db.String(50))
     email = db.Column('email', db.String(50), unique=True)
     telefone = db.Column('telefone', db.String(15), unique=True, nullable=False)

@@ -70,8 +70,8 @@ def recovery():
         
         consultas_dados.append({
             'id': consulta.id,
-            'data_consulta': consulta.data_consulta.strftime('%d/%m/%Y'), 
-            'hora_consulta': consulta.hora_consulta.strftime('%H:%M'),  
+            'data_consulta': consulta.data_consulta, 
+            'hora_consulta': consulta.hora_consulta,  
             'duracao': consulta.duracao,
             'status': status.status,
             'paciente_nome': paciente.nome,

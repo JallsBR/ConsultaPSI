@@ -1,25 +1,19 @@
 {% extends 'base.html' %}
 
 {% block conteudo %}
-
 <form method="post" action='/transcricoes/create'>
-    <label for="id_consulta" class="form-label">Consulta:</label>
-    <select class="form-select" name="id_consulta" aria-label="Default select example">
-        <option value="" disabled selected> - </option>
-        {% for consulta in consultas %}
-        <option value="{{ consulta['id'] }}"> {{ consulta['data_consulta'] }} - {{ consulta['nome_paciente'] }} </option>
-        {% endfor %}
-    </select>
-    <br>
+    <input type="hidden" name="id_consulta" value="{{ id_consulta }}">
+    <input type="hidden" name="psi_id" value="{{ current_user.id }}">
     
     <div class="mb-3">
         <label for="transcricao" class="form-label">Transcrição:</label>
-        <textarea class="form-control" name="transcricao" rows="55" required></textarea>
+        <textarea class="form-control" name="transcricao" rows="35" required></textarea>
     </div>           
 
     <button type="submit" class="btn btn-primary">Salvar Transcrição</button>
     <br>
     <br>
 </form>
+
 
 {% endblock %}

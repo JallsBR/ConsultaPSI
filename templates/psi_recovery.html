@@ -22,7 +22,7 @@
 
         <td>{{psi.nome}} {{psi.sobrenome}}</td>       
         <td>{{psi.email}}</td>
-        <td>{{psi.telefone}}</td>
+        <td>{{psi.telefone| format_phone }}</td>
         <td>
           <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#infoModal{{psi.id}}">Informações</a>
           {% if psi.id == current_user.id %}
@@ -50,7 +50,7 @@
                     <p><strong>CRP:</strong> {{psi.crp}}</p>
                     <p><strong>Abordagem:</strong> {{psi.abordagem}}</p>
                     <p><strong>Email:</strong> {{psi.email}}</p>
-                    <p><strong>Telefone:</strong> {{psi.telefone}}</p> 
+                    <p><strong>Telefone:</strong> {{psi.telefone | format_phone }}</p> 
                   </div>
 
                   

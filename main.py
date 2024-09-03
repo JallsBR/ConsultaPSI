@@ -4,6 +4,8 @@ from database.database import db
 from flask_migrate import Migrate
 from extensions import login_manager
 
+
+
 from routes.consultas import blueprint_consultas
 from routes.psi import blueprint_psi
 from routes.convenio import blueprint_convenio
@@ -35,13 +37,25 @@ app.register_blueprint(blueprint_login, url_prefix='/login')
 app.register_blueprint(blueprint_user, url_prefix='/user')
 migrate = Migrate(app, db)
 
+
+@app.template_filter('format_phone')
+def format_phone(phone):
+    return f"({phone[:2]}) {phone[2]} {phone[3:7]}-{phone[7:]}"
+
+
+
 @app.route('/')
 def index():
     if not current_user.is_authenticated:
         return redirect('/login')
     if current_user.tipo == 'não informado':
         return redirect(f'/user/finalizar/{current_user.id}')
+    
+    
     return render_template('index.html')
+
+
+
 
 @app.route('/logout')
 def logout():

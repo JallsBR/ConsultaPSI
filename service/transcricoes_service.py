@@ -1,22 +1,27 @@
 from database.models.transcricao_model import Transcricao
 from database.models.consulta_model import Consulta
 from database.models.paciente_model import Paciente
-
 from database.database import db
 
 class TranscricaoService:
 
     @staticmethod
-    def create_transcricao(id_consulta, transcricao, data_transcricao):
+    def create_transcricao(id_consulta, transcricao, psi_id ,data_transcricao):
+        print(f"Recebido: {id_consulta}, {transcricao}, {psi_id}, {data_transcricao}")  
         try:
-            nova_transcricao = Transcricao(id_consulta=id_consulta, transcricao=transcricao, data_transcricao=data_transcricao)
+            nova_transcricao = Transcricao(
+                id_consulta=id_consulta,
+                transcricao=transcricao,
+                data_transcricao=data_transcricao,
+                psi_id = psi_id 
+            )
             db.session.add(nova_transcricao)
             db.session.commit()
             return True, "Transcrição criada com sucesso."
         except Exception as e:
+            print(str(e))
             db.session.rollback()
             return False, str(e)
-        
 
     @staticmethod
     def get_transcricao_faltantes():
@@ -28,7 +33,6 @@ class TranscricaoService:
                 Paciente.nome
             ).join(Paciente).filter(~Consulta.id.in_(transcritas_subquery)).all()
             
-            # Converte o resultado em uma lista de dicionários
             result = [{'id': c.id, 'data_consulta': c.data_consulta, 'nome_paciente': c.nome} for c in consultas]
             return result, None
         except Exception as e:
@@ -43,7 +47,7 @@ class TranscricaoService:
                 Consulta.data_consulta,
                 Paciente.nome,
                 Transcricao.transcricao
-            ).select_from(Transcricao).join(Consulta).join(Paciente, Consulta.id_paciente == Paciente.id).all()
+            ).join(Consulta).join(Paciente, Consulta.id_paciente == Paciente.id).all()
             return transcricoes, None
         except Exception as e:
             return None, str(e)
@@ -57,13 +61,14 @@ class TranscricaoService:
             return None, str(e)
 
     @staticmethod
-    def update_transcricao(id, id_consulta, nova_transcricao, data_transcricao):
+    def update_transcricao(id, id_consulta, nova_transcricao, data_transcricao, psi_id):
         try:
             transcricao = Transcricao.query.get(id)
             if transcricao:
                 transcricao.id_consulta = id_consulta
                 transcricao.transcricao = nova_transcricao
                 transcricao.data_transcricao = data_transcricao
+                transcricao.psi_id = psi_id
                 db.session.commit()
                 return True, "Transcrição atualizada com sucesso."
             else:
@@ -85,4 +90,3 @@ class TranscricaoService:
         except Exception as e:
             db.session.rollback()
             return False, str(e)
-

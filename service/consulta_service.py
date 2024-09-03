@@ -1,5 +1,6 @@
 from database.models.consulta_model import Consulta
 from database.models.paciente_model import Paciente  
+from sqlalchemy import desc
 from database.database import db
 from datetime import datetime
 
@@ -77,7 +78,7 @@ class ConsultaService:
     @staticmethod
     def get_all_consultas():
         try:
-            consultas = Consulta.query.all()
+            consultas = Consulta.query.order_by(desc(Consulta.id)).all()
             return consultas, None
         except Exception as e:
             return None, str(e)
@@ -96,6 +97,21 @@ class ConsultaService:
     def get_consultas_by_psi_id(psi_id):
         try:
             consultas = Consulta.query.filter_by(psi_id=psi_id).all()
+            return consultas, None
+        except Exception as e:
+            return None, str(e)
+
+
+    @staticmethod
+    def get_consulta_pacientes_por_id(id_paciente):
+        try:
+            consultas = (
+                db.session.query(Consulta)
+                .join(Paciente)
+                .filter(Consulta.id_paciente == id_paciente)
+                .order_by(Consulta.id.desc())
+                .all()
+            )
             return consultas, None
         except Exception as e:
             return None, str(e)

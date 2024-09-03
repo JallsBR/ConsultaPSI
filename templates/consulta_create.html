@@ -32,15 +32,21 @@
                 {% endfor %}
             </select>
         </div>
-        <div class="mb-3">
-            <label for="psi_id" class="form-label">Psicólogo:</label>
-            <select class="form-select" name="psi_id" required>
-                <option value="" disabled selected>Selecione o Psicólogo</option>
-                {% for psi in psicologos %}
-                <option value="{{ psi.id }}">{{ psi.nome }}</option>
-                {% endfor %}
-            </select>
-        </div>
+
+        {% if current_user.tipo == 'psicólogo' %}
+        <input type="hidden" name="psi_id" value="{{ current_user.id }}">
+        {% else %}
+            <div class="mb-3">
+                <label for="psi_id" class="form-label">Psicólogo:</label>
+                <select class="form-select" name="psi_id" required>
+                    <option value="" disabled selected>Selecione o Psicólogo</option>
+                    {% for psi in psicologos %}
+                        <option value="{{ psi.id }}">{{ psi.nome }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+        {% endif %} 
+        
         <div class="mb-3">
             <label for="convenios_id" class="form-label">Convênio:</label>
             <select class="form-select" name="convenios_id" required>

@@ -51,14 +51,3 @@ def update(id):
             print(id, nome, sobrenome, abordagem, crp, email, telefone, login)  
             flash(message)
             return render_template('psi_update.html', psi=psi)
-
-
-@blueprint_psi.route('/listapacientes/<int:id>', methods=['GET', 'POST'])
-def list_pacientes(id):
-    pacientes, error = PacienteService.get_all_pacientes_with_consultas_transcricoes_por_psi(id)
-    
-    if error:
-        flash(error)
-        return redirect('/psi/recovery')
-    
-    return render_template('psi_pacientes_list.html', pacientes=pacientes)

@@ -18,6 +18,7 @@ class Consulta(db.Model):
     convenio = db.relationship('Convenio', backref='consultas')
     psi = db.relationship('User', backref='consultas')
     status = db.relationship('StatusConsulta', backref='consultas')
+    transcricao = db.relationship('Transcricao', uselist=False, backref='consulta')
 
 
     def __init__(self, data_marcacao, data_consulta, hora_consulta, duracao, consulta_status_id, id_paciente, convenios_id, psi_id):
