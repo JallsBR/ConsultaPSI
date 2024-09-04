@@ -5,7 +5,7 @@ from service.psi_service import PsiService
 from service.convenio_service import ConvenioService
 from service.status_consultas_service import StatusConsultaService
 import locale
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 blueprint_consultas = Blueprint("consultas", __name__, template_folder="templates")
@@ -55,29 +55,59 @@ def create():
 
 
 
-@blueprint_consultas.route('/recovery')
+@blueprint_consultas.route('/recovery', methods=['GET'])
 def recovery():
-    consultas, error = ConsultaService.get_all_consultas()
-    if error:
-        flash(error)
-        return render_template('consulta_recovery.html', consulta=[])
 
-    consultas_dados = []
-    for consulta in consultas:
-        paciente = consulta.paciente
-        status = consulta.status
-        psi = consulta.psi  
-        
-        consultas_dados.append({
-            'id': consulta.id,
-            'data_consulta': consulta.data_consulta, 
-            'hora_consulta': consulta.hora_consulta,  
-            'duracao': consulta.duracao,
-            'status': status.status,
-            'paciente_nome': paciente.nome,
-            'psi_nome': psi.nome
-        })
-    return render_template('consulta_recovery.html', consulta=consultas_dados)
+    start_date_str = request.args.get('start_date')
+    end_date_str = request.args.get('end_date')
+    psi_id = request.args.get('psi_id')
+    
+
+    if not start_date_str:
+        start_date = datetime.today().replace(day=1)
+    else:
+        start_date = datetime.strptime(start_date_str, '%d/%m/%Y')
+    
+    if not end_date_str:
+        next_month = start_date.replace(day=28) + timedelta(days=4)  
+        end_date = next_month - timedelta(days=next_month.day)  
+    else:
+        end_date = datetime.strptime(end_date_str, '%d/%m/%Y')
+
+
+    psicologos, error = PsiService.get_all_psis()
+
+    try:
+
+        consultas, error = ConsultaService.get_consultas_by_date_range(start_date, end_date, psi_id)
+
+        if error:
+            flash(error)
+            return render_template('consulta_recovery.html', consulta=[], psicologos=psicologos)
+
+
+        consultas_dados = []
+        for consulta in consultas:
+            paciente = consulta.paciente
+            status = consulta.status
+            psi = consulta.psi
+            
+            consultas_dados.append({
+                'id': consulta.id,
+                'data_consulta': consulta.data_consulta, 
+                'hora_consulta': consulta.hora_consulta,  
+                'duracao': consulta.duracao,
+                'status': status.status,
+                'paciente_nome': paciente.nome,
+                'psi_nome': psi.nome
+            })
+
+        return render_template('consulta_recovery.html', consulta=consultas_dados, psicologos=psicologos)
+    
+    except Exception as e:
+        flash(str(e))
+        return render_template('consulta_recovery.html', consulta=[], psicologos=psicologos)
+
 
 
 
@@ -109,6 +139,9 @@ def update(id):
         else:
             flash(message)
             return render_template('consulta_update.html', consulta=consulta, status=status)
+        
+
+        
 
 @blueprint_consultas.route('/delete/<int:id>', methods=['GET', 'POST'])
 def delete(id):

@@ -3,44 +3,87 @@
 {% block conteudo %}
 
 <div class="container">
+  <br>
   <div class="container">
-    <br>
-    <div class="container">
-      <a type="button" class="btn btn-primary" href="/consultas/create">Agendar Consultas</a>
-    </div>
-    <br>
-    <h3>Próximas Consultas</h3>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">Id</th>
-          <th scope="col">Paciente</th>
-          <th scope="col">Dia</th>
-          <th scope="col">Hora</th>
-          <th scope="col">Duração</th>
-          <th scope="col">Status</th>
-          <th scope="col">Psicólogo</th>
-          <th scope="col">Ações</th>
-        </tr>
-      </thead>
-      <tbody>
-        {% for consulta in consulta %}
-        <tr>
-          <td>{{ consulta.id }}</td>
-          <td>{{ consulta.paciente_nome }}</td>
-          <td>{{ consulta.data_consulta.strftime('%d/%m/%Y') }}</td>
-          <td>{{ consulta.hora_consulta }}</td>
-          <td>{{ consulta.duracao }}</td>
-          <td>{{ consulta.status }}</td>
-          <td>{{ consulta.psi_nome }}</td>
-          <td>
-            <a type="button" class="btn btn-primary" href="/consultas/update/{{ consulta.id }}">Editar</a>
-            <a type="button" class="btn btn-danger" href="/consultas/delete/{{ consulta.id }}">Deletar</a>
-          </td>
-        </tr>
-        {% endfor %}
-      </tbody>
-    </table>
+    <a type="button" class="btn btn-primary" href="/consultas/create">Agendar Consultas</a>
   </div>
+  <br>
+  <form method="GET" action="/consultas/recovery">
+    <div class="row">
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="start_date"><b>Data Inicial</b></label>
+          <input type="text" class="form-control" id="start_date" name="start_date" value="{{ start_date }}">
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="end_date"><b>Data Final</b></label>
+          <input type="text" class="form-control" id="end_date" name="end_date" value="{{ end_date }}">
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="form-group">
+          <label for="psi_id"><b>Psicólogo</b></label>
+          <select class="form-control" id="psi_id" name="psi_id">
+            <option value="">Todos</option>
+            {% for psicologo in psicologos %}
+            <option value="{{ psicologo['id'] }}">{{ psicologo['nome'] }} {{ psicologo['sobrenome'] }}</option>
+            {% endfor %}
+          </select>
+        </div>
+      </div>
+      <div class="col-md-2 align-self-end">
+        <button type="submit" class="btn btn-primary">Buscar</button>
+      </div>
+    </div>
+  </form>
+  <br>
+  <h3><b>Consultas</b></h3>
+  <table class="table">
+    <thead>
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Paciente</th>
+        <th scope="col">Dia</th>
+        <th scope="col">Hora</th>
+        <th scope="col">Duração</th>
+        <th scope="col">Status</th>
+        <th scope="col">Psicólogo</th>
+        <th scope="col">Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for consulta in consulta %}
+      <tr>
+        <td>{{ consulta.id }}</td>
+        <td>{{ consulta.paciente_nome }}</td>
+        <td>{{ consulta.data_consulta.strftime('%d/%m/%Y') }}</td>
+        <td>{{ consulta.hora_consulta }}</td>
+        <td>{{ consulta.duracao }}</td>
+        <td>{{ consulta.status }}</td>
+        <td>{{ consulta.psi_nome }}</td>
+        <td>
+          <a type="button" class="btn btn-primary" href="/consultas/update/{{ consulta.id }}">Editar</a>
+          <a type="button" class="btn btn-danger" href="/consultas/delete/{{ consulta.id }}">Deletar</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+<!-- jQuery e jQuery UI para o DatePicker -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.min.js"></script>
+<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+
+<script>
+  $(function() {
+    $("#start_date, #end_date").datepicker({
+      dateFormat: 'dd/mm/yy'
+    });
+  });
+</script>
 
 {% endblock %}

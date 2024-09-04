@@ -4,20 +4,19 @@
 
 {% if current_user.is_authenticated %}
 
-
-
     {% if current_user.tipo == 'não informado' %}
     <h3>Precisamos terminar seu cadastro!</h3>
-
     <br>
-    <form method="post" action="/user/update/{{current_user.id}}">
-        <label for="psi.id" class="form-label">Função:</label>
-        <select class="form-select" id="psi_id" name="psi_id" aria-label="Default select example" onchange="toggleFields()">
-            <option selected value=""> - </option>        
-            <option value="atendente">Atendente</option>
-            <option value="psicólogo">Psicólogo</option>   
-        </select>
-    
+    <form method="post" action="/user/update/{{ current_user.id }}">
+        <div class="mb-3">
+            <label for="psi_id" class="form-label">Função:</label>
+            <select class="form-select" id="psi_id" name="psi_id" aria-label="Default select example" onchange="toggleFields()">
+                <option selected value=""> - </option>        
+                <option value="atendente">Atendente</option>
+                <option value="psicólogo">Psicólogo</option>   
+            </select>
+        </div>
+
         <div class="mb-3">
             <label for="crp" class="form-label">CRP:</label>
             <input class="form-control" type="text" id="crp" name="crp" disabled> 
@@ -26,17 +25,17 @@
             <label for="abordagem" class="form-label">Abordagem:</label>
             <input class="form-control" type="text" id="abordagem" name="abordagem" disabled> 
         </div>
-    
+
         <input type="submit" class="btn btn-primary" value="Cadastrar">
         <br>
     </form>
-    
+
     <script>
         function toggleFields() {
             var psiId = document.getElementById('psi_id').value;
             var crpField = document.getElementById('crp');
             var abordagemField = document.getElementById('abordagem');
-    
+
             if (psiId === 'psicólogo') {
                 crpField.disabled = false;
                 abordagemField.disabled = false;
@@ -47,25 +46,87 @@
                 abordagemField.disabled = true;
             }
         }
+
+        // Initialize the state of the fields based on the selected value on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            toggleFields();
+        });
     </script>
 
 
 
 
 
+
+
+    {% elif current_user.tipo == 'psicólogo' %}
+    
+    <h1><strong>{{ current_user.nome }} {{ current_user.sobrenome }}</strong></h1>
+
+    <div class="container text-center"> 
+        <div class="row">
+            <!-- Coluna da Agenda da Semana -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4><strong>Agenda da Semana</strong></h4>
+                    </div>
+                    <div class="card-body">
+                        {% if consultas_semana %}
+                            <ul class="list-group list-group-flush">
+                                {% for consulta in consultas_semana %}
+                                    <li class="list-group-item">
+                                        <p class="mb-0"> <strong>{{ consulta.data_consulta.strftime('%d/%m/%Y') }} </strong> - {{ consulta.hora_consulta }} - {{ consulta.paciente.nome }}</p>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="card-text"><strong>Nenhuma consulta agendada</strong></p>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+    
+            <!-- Coluna do Relatório e Ganhos Totais -->
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4><strong>Relatório de Consultas por Convênio</strong></h4>
+                    </div>
+                    <div class="card-body">
+                        {% if relatorio_convenio %}
+                            <ul class="list-group list-group-flush">
+                                {% for item in relatorio_convenio %}
+                                    <li class="list-group-item">
+                                        <p class="mb-0"><strong>{{ item.convenio }}</strong> - {{ item.quantidade }} Consultas - Ganhos R$ {{ "%.2f"|format(item.ganhos) }}</p>
+                                    </li>
+                                {% endfor %}
+                            </ul>
+                        {% else %}
+                            <p class="card-text"><strong>Nenhum dado disponível</strong></p>
+                        {% endif %}
+                    </div>
+                </div>
+                <br>
+                <div class="card mt-3">
+                    <div class="card-header">
+                        <h4><strong>Ganhos Totais</strong></h4>
+                    </div>
+                    <div class="card-body">
+                        <p class="card-text"><strong>Total de Ganhos:</strong> R$ {{ "%.2f"|format(ganhos) }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+
     {% else %}
-        <h3>Página inicial</h3>
+    <h3>Atendente</h3>
     {% endif %}
-
-
-
-
-
-
-
-
 {% else %}
-    {{ redirect('/login') }}
+    <p>Você precisa estar autenticado para acessar esta página. <a href="/login">Faça login</a></p>
 {% endif %}
 
 {% endblock %}

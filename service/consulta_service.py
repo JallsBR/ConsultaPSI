@@ -1,6 +1,6 @@
 from database.models.consulta_model import Consulta
 from database.models.paciente_model import Paciente  
-from sqlalchemy import desc
+from sqlalchemy import desc, asc
 from database.database import db
 from datetime import datetime
 
@@ -76,9 +76,12 @@ class ConsultaService:
             return False, str(e)
 
     @staticmethod
-    def get_all_consultas():
+    def get_all_consultas(psi_id=None):
         try:
-            consultas = Consulta.query.order_by(desc(Consulta.id)).all()
+            query = Consulta.query.order_by(desc(Consulta.id)).all()
+            if psi_id:
+                query = query.filter_by(psi_id=psi_id)
+            consultas = query.all()
             return consultas, None
         except Exception as e:
             return None, str(e)
@@ -113,5 +116,59 @@ class ConsultaService:
                 .all()
             )
             return consultas, None
+        except Exception as e:
+            return None, str(e)
+        
+        
+
+    @staticmethod
+    def get_consultas_by_date_range(start_date, end_date, psi_id=None):
+        try:
+            # Filtro de consultas pelo intervalo de datas e ID do psicólogo (se fornecido)
+            query = Consulta.query.filter(Consulta.data_consulta.between(start_date, end_date))
+            
+            if psi_id:
+                query = query.filter_by(psi_id=psi_id)
+            
+            # Ordenar os resultados pela data da consulta em ordem ascendente
+            consultas = query.order_by(asc(Consulta.data_consulta)).all()
+            return consultas, None
+        except Exception as e:
+            return None, str(e)
+
+
+
+    @staticmethod
+    def get_relatorio_convenio_e_ganhos(psi_id):
+        try:
+            # Obtém todas as consultas filtradas pelo psi_id
+            consultas = Consulta.query.filter_by(psi_id=psi_id).all()
+            relatorio = {}
+            ganhos_totais = 0.0
+            
+            # Itera sobre as consultas para agrupar por convênio
+            for consulta in consultas:
+                # Se o convênio existir, usa seu nome e valor; caso contrário, usa 'Particular'
+                if consulta.convenio:
+                    convenio_nome = consulta.convenio.convenio
+                    valor_consulta = consulta.convenio.valor_consulta
+                else:
+                    convenio_nome = 'Não informado'
+                    valor_consulta = 'Não informado'
+                # Agrupando as consultas pelo nome do convênio
+                if convenio_nome not in relatorio:
+                    relatorio[convenio_nome] = {'quantidade': 0, 'ganhos': 0.0}
+                
+                relatorio[convenio_nome]['quantidade'] += 1
+                relatorio[convenio_nome]['ganhos'] += valor_consulta
+                ganhos_totais += valor_consulta
+            
+            # Serializa o resultado
+            relatorio_serializado = [
+                {'convenio': convenio, 'quantidade': dados['quantidade'], 'ganhos': dados['ganhos']}
+                for convenio, dados in relatorio.items()
+            ]
+            
+            return relatorio_serializado, ganhos_totais
         except Exception as e:
             return None, str(e)

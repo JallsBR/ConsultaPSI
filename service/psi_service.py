@@ -74,7 +74,7 @@ class PsiService:
     def get_pacientes_do_psi(id):  
     
         try:
-            # Verifica se o psicólogo existe
+
             psi = User.query.filter_by(id=id, tipo="psicologo").first()
             if not psi:
                 return None, "Psicólogo não encontrado."

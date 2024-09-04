@@ -3,6 +3,8 @@ from flask_login import logout_user, current_user
 from database.database import db
 from flask_migrate import Migrate
 from extensions import login_manager
+from datetime import datetime, timedelta
+from service.consulta_service import ConsultaService
 
 
 
@@ -51,6 +53,16 @@ def index():
     if current_user.tipo == 'não informado':
         return redirect(f'/user/finalizar/{current_user.id}')
     
+    if current_user.tipo == 'psicólogo':
+        hoje = datetime.today().date()
+        semana_inicio = hoje - timedelta(days=hoje.weekday())
+        semana_fim = semana_inicio + timedelta(days=6)
+        
+        consultas_semana, _ = ConsultaService.get_consultas_by_date_range(start_date=semana_inicio, end_date=semana_fim, psi_id=current_user.id)
+
+        relatorio_convenio, ganhos = ConsultaService.get_relatorio_convenio_e_ganhos(current_user.id)
+
+        return render_template('index.html', consultas_semana=consultas_semana, relatorio_convenio=relatorio_convenio, ganhos=ganhos)
     
     return render_template('index.html')
 
