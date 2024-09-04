@@ -10,7 +10,6 @@ class UserService:
     
     @staticmethod
     def create_user(nome, sobrenome, email, telefone, login, senha, tipo):
-        print(f"Recebido: {nome}, {sobrenome}, {email}, {telefone}, {login}, {senha}, {tipo}")
         try:
             user = User(
                 nome=nome,

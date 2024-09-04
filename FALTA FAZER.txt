@@ -2,7 +2,7 @@
 palavras chaves
 
 
-
+delete user por adm
 
 
 {{current_user.nome}}

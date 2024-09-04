@@ -29,7 +29,6 @@ def create():
         transcricao = request.form.get('transcricao')
         psi_id = request.form.get('psi_id')
         data_transcricao = str(datetime.utcnow())
-        print(f"POST: {id_consulta}, {transcricao}, {psi_id}, {data_transcricao}")
 
         success, message = TranscricaoService.create_transcricao(id_consulta=id_consulta, psi_id=psi_id, transcricao=transcricao, data_transcricao=data_transcricao)
         if success:

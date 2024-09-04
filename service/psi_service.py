@@ -11,7 +11,6 @@ class PsiService:
 
     @staticmethod
     def update_psi(id, nome=None, sobrenome=None, crp=None, abordagem=None, email=None, telefone=None, login=None, senha=None):
-        print("ATUALIZANDO: ", id, nome, sobrenome, crp, abordagem, email, telefone, login, senha)
         try:
             psi = User.query.get(id)
             if not psi or psi.tipo != "psicólogo":
