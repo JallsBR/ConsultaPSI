@@ -34,18 +34,8 @@ def create():
         else:
             print("Alguns campos estão faltando.")
             flash("Todos os campos devem ser preenchidos!")
-            return redirect('/login')
-        
-"""        
-@blueprint_user.route('/recovery')
-def recovery():
-    users, error = UserService.get_all_users()
-    if error:
-        flash(error)
-        return render_template('user_recovery.html', users=[])
-    
-    return render_template('user_recovery.html', users=users)
-"""
+            return redirect('/login')      
+
 
 
 @blueprint_user.route('/update/<int:id>', methods=['GET', 'POST'])
