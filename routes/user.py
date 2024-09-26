@@ -19,7 +19,7 @@ def create():
         senha = request.form.get('senha')
         csenha = request.form.get('csenha')
         
-        print('REQUESTS: ', nome, sobrenome, email, telefone, login, senha) 
+
         if nome and sobrenome and email and telefone and login and senha and csenha==senha:
 
             success, message = UserService.create_user(nome, sobrenome, email, telefone, login, senha)
