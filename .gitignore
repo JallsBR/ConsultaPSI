@@ -6,3 +6,6 @@ Falta Fazer.txt
 
 # Ignorar a pasta .vscode
 .vscode/
+
+# Ignorar a pasta .dist
+.dist/
