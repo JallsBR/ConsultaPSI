@@ -1,0 +1,21 @@
+@startuml PSIConsulta
+/' Oswaldo Jales '/ 
+
+left to right direction
+actor "Psicólogo" as psi
+actor "Atendente" as atendente
+rectangle ConsultaPSI {
+  usecase "Visualizar Relatórios Mensais" as VRM
+  usecase "Manter Consultas" as MC
+  usecase "Manter Pacientes" as MP
+  usecase "Manter Transcrições" as MT
+
+}
+psi --> VRM
+psi --> MC
+psi --> MP
+psi --> MT
+atendente --> MC
+atendente --> MP
+
+@enduml

@@ -1,0 +1,9 @@
+@startuml Consultas_ConsultaPSI
+
+/' Oswaldo Jales '/ 
+start
+repeat
+:Visualizar relatorio;
+repeat while (Selecionar intervalo de tempo)
+stop
+@enduml

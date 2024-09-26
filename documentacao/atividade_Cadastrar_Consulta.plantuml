@@ -1,0 +1,14 @@
+@startuml Visualizar_Relatorios_ConsultaPSI
+
+/' Oswaldo Jales '/ 
+start
+repeat
+    if (Paciente Cadastrado?) then (Não cadastrado)
+        :Cadastrar Paciente;
+    else (Cadastro selecionado)
+        :Cadastrar Consulta;
+    endif
+repeat while (Há mais consultas a cadastrar?)
+stop
+
+@enduml

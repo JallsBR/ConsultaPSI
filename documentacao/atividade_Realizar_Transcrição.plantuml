@@ -1,0 +1,11 @@
+@startuml Trascrição_ConsultaPSI
+
+/' Oswaldo Jales '/ 
+start
+repeat
+:Selecionar Paciente;
+:Selecionar Consulta;
+:Realizar Trascrição;
+repeat while (Realizar mais transcrições?)
+stop
+@enduml
