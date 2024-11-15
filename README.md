@@ -1,2 +1,2 @@
 # ConsultaPSI
-Aplicação Flask paragerenciamento de pacientes, consultas e transcrições de um conultório de Psicologia
+Aplicação Flask para gerenciamento de pacientes, consultas e transcrições de um consultório de Psicologia
